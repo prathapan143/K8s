@@ -1,0 +1,150 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-configmap-pod
+spec:
+  containers:
+  - image: nginx
+    name: nginx-container       
+    env:
+     - name: app
+       value: webserver
+
+
+
+
+
+
+
+
+
+
+1. passing ConfigMap values to container environment variables
+================================================================
+
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-configmap
+data:
+  config_file: "/etc/nginx/customconfig"
+  nginx_port: "80"
+  environment: production
+  application: we-app
+
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-configmap-pod
+spec:
+  containers:
+  - image: nginx
+    name: nginx-container
+    env:
+    - name: nginx_port
+      valueFrom:
+        configMapKeyRef:
+          name: my-configmap
+          key: nginx_port
+
+    - name: environment
+      valueFrom:
+        configMapKeyRef:
+          name: my-configmap
+          key: environment
+
+================================================================================================================================================================
+
+2.passing complete ConfigMap Object as environment variables to the container
+=============================================================================
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-configmap
+data:
+  config_file: "/etc/nginx/customconfig"
+  nginx_port: "80"
+  environment: production
+  application: we-app
+
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-configmap-pod-1
+spec:
+  containers:
+  - image: nginx
+    name: nginx-container
+    envFrom:
+    - configMapRef:
+        name: my-configmap
+
+# kubectl get configmaps
+# kubectl describe configmaps my-configmap
+# kubectl exec -it my-configmap-pod-1 -- env
+
+# kubectl exec -it my-configmap-pod-1 -- bash -c 'echo $nginx_port'
+
+
+
+
+
+==========================================================================================================================================================
+
+
+
+
+
+3. Attaching ConfigMap as container volume
+
+
+
+
+
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  labels:
+    app: nginx
+data:
+  index.html: |
+    this test web server
+    this test web server for configmap testing
+
+
+
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-configmap-pod
+  labels: 
+    app: nginx
+spec:
+  containers:
+  - image: nginx
+    name: nginx-container
+    volumeMounts:
+      - name: nginx-config
+        mountPath: /usr/share/nginx/html
+  volumes:
+    - name: nginx-config
+      configMap:
+        name: nginx-config
+
+
+
+=============================================================================================================================================================
+
+
+
+
+
