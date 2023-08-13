@@ -60,7 +60,7 @@ etcd is a distributed key-value store that is used by Kubernetes to store the co
 
 1. **Cluster state management**: etcd is used to store the state of all resources in the Kubernetes cluster, including nodes, pods, services, and deployments. This information is stored as key-value pairs in a hierarchical structure.
 
-2. **High availability**: etcd is designed to be highly available, even in the event of node failures or network partitions. It achieves this by replicating data across multiple nodes in the cluster and using a consensus algorithm to ensure that all nodes have a consistent view of the data.
+2. **High availability**: etcd is designed to be highly available, even in the event of node failures or network partitions. It achieves this by replicating data across multiple nodes in the cluster and using a **consensus algorithm** to ensure that all nodes have a consistent view of the data.
 
 3. **Data consistency**: etcd ensures that all nodes in the cluster have a consistent view of the data by using a distributed locking mechanism. This prevents multiple nodes from updating the same data at the same time, which could result in conflicts or inconsistencies.
 
