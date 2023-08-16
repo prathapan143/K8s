@@ -84,3 +84,141 @@ Assign multiple labels to a pod and then use label selectors to filter using mul
 You should see the `nginx` pod in the output since it matches both criteria.
 
 These exercises should help learners understand the basic functionality of Kubernetes labels and how to use them effectively.
+
+
+
+
+Sure, here are 4 lab exercises with solutions for Kubernetes Labels:
+
+## Exercise 1: Creating and Updating Labels
+
+### Objective:
+In this exercise, you will learn how to create and update labels for a Kubernetes resource.
+
+### Steps:
+1. Create a new deployment called `my-deployment` with the image `nginx:latest`.
+2. Add the label `app: web` to the deployment.
+3. Update the label to `app: frontend`.
+
+### Solution:
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deployment
+spec:
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+```
+
+To update the label, simply edit the deployment and change `app: web` to `app: frontend`.
+
+## Exercise 2: Selecting Resources by Label
+
+### Objective:
+In this exercise, you will learn how to select Kubernetes resources by label.
+
+### Steps:
+1. Create a new deployment called `my-deployment` with the image `nginx:latest`.
+2. Add the label `app: web` to the deployment.
+3. Create a new service called `my-service` that selects the `my-deployment` by label.
+
+### Solution:
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deployment
+spec:
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: web
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+```
+
+## Exercise 3: Labeling Nodes
+
+### Objective:
+In this exercise, you will learn how to label Kubernetes nodes.
+
+### Steps:
+1. Get the name of a node in your cluster using `kubectl get nodes`.
+2. Add the label `environment: production` to the node.
+
+### Solution:
+```bash
+$ kubectl get nodes
+NAME          STATUS   ROLES                  AGE   VERSION
+my-node       Ready    control-plane,master   2d    v1.22.1
+
+$ kubectl label nodes my-node environment=production
+```
+
+## Exercise 4: Using Labels in Deployments
+
+### Objective:
+In this exercise, you will learn how to use labels in Kubernetes deployments.
+
+### Steps:
+1. Create a new deployment called `my-deployment` with the image `nginx:latest`.
+2. Add the label `app: web` to the deployment.
+3. Update the deployment to use a rolling update strategy with a max surge of 1 and a max unavailable of 0.
+4. Scale up the deployment to 3 replicas.
+
+### Solution:
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deployment
+spec:
+  selector:
+    matchLabels:
+      app: web
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+```
+
+Note that the update strategy and scaling can be done separately by editing the deployment.
