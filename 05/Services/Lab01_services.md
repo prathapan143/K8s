@@ -1,4 +1,3 @@
-Certainly! Here are five lab exercises related to Kubernetes NodePort, complete with their solutions:
 
 ### Exercise 1: Deploy a simple web application using NodePort
 
@@ -96,4 +95,3 @@ kubectl delete svc nginx
 kubectl delete svc nginx-fixed-port
 ```
 
-Remember to always adjust the exercises to the specifics of your environment or Kubernetes setup, especially regarding networking and access methods.
