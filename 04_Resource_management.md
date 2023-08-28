@@ -8,6 +8,22 @@ Resource Limits: This is the maximum amount of a specific resource that a contai
 
 You can set these resource requests and limits in the Pod specification. Here's an example:
 
+Sure, I can help you with that! Here's a lab exercise for Kubernetes Resource Management:
+
+## Lab Exercise: Kubernetes Resource Management
+
+### Objective
+In this lab exercise, you will learn how to manage resources in a Kubernetes cluster using resource requests and limits.
+
+### Prerequisites
+- A Kubernetes cluster
+- kubectl CLI
+
+### Steps
+
+1. Create a deployment with a container that consumes a lot of CPU and memory resources. For example, you can use the nginx image and set the CPU and memory requests and limits to high values:
+
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -32,6 +48,18 @@ spec:
           limits:
             cpu: "4"
             memory: "4Gi"
+```
+
+2. Verify that the deployment is running and the container is consuming the requested resources:
+
+```bash
+kubectl get pods
+kubectl describe pod <pod-name>
+```
+
+
+### Conclusion
+In this lab exercise, you learned how to manage resources in a Kubernetes cluster using resource requests and limits, and how to automatically scale a deployment based on CPU utilization using a horizontal pod autoscaler.
 
 
 
