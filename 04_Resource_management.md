@@ -8,21 +8,33 @@ Resource Limits: This is the maximum amount of a specific resource that a contai
 
 You can set these resource requests and limits in the Pod specification. Here's an example:
 
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: mypod
+  name: nginx-deployment
 spec:
-  containers:
-  - name: mycontainer
-    image: myimage
-    resources:
-      requests:
-        memory: "256Mi"
-        cpu: "500m"
-      limits:
-        memory: "512Mi"
-        cpu: "1"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        resources:
+          requests:
+            cpu: "2"
+            memory: "2Gi"
+          limits:
+            cpu: "4"
+            memory: "4Gi"
+
+
+
 In this example:
 
 The requests mean the container is guaranteed to have 256 MiB of memory and 500 milliCPU cores.
