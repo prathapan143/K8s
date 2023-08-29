@@ -1,3 +1,5 @@
+**SSL Configuration for Ingress Controller **
+
 The Nginx Ingress Controller has been installed and an Ingress resource configured in Namespace world .
 
 You can reach the application using
